@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Loader2, ShieldCheck } from 'lucide-react';
 import { User } from '../types';
-import { registerUser, loginUser } from '../services/authService';
+import { register, login } from '../services/auth';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, isDar
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
-      const user = await registerUser({
+      const user = await register({
         name: 'Bat-Erdene',
         email: 'baterdene@gmail.com',
       });
@@ -35,7 +35,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, isDar
   const handleAdminLogin = async () => {
     try {
       setIsLoading(true);
-      const user = await registerUser({
+      const user = await register({
         name: 'System Administrator',
         email: 'admin@previsa.mn',
       });
