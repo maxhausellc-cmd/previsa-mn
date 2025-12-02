@@ -1,29 +1,17 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
-
-// Frontend URL-г зөв оруулах
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://previsa-mn-frontend.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  origin: "https://previsa-mn-frontend.vercel.app", // Vercel frontend URL
+  methods: ["GET","POST","PUT","DELETE"]
 }));
 
 app.use(express.json());
 
-// Example routes
-app.post('/api/auth/register', (req, res) => {
-  res.json({ message: 'User registered' });
-});
+// API маршрутууд
+// app.use("/api/auth", authRoutes);
+// app.use("/api/payments", paymentRoutes);
 
-app.post('/api/auth/login', (req, res) => {
-  res.json({ message: 'User logged in' });
-});
-
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Previsa MN backend running on http://localhost:${PORT}`);
-});
+app.listen(3001, () => console.log("Server running on port 3001"));
