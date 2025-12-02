@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Loader2, ShieldCheck } from 'lucide-react';
 import { User } from '../types';
+import { registerUser, loginUser } from '../services/authService';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -14,37 +15,38 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, isDar
 
   if (!isOpen) return null;
 
-  const handleGoogleLogin = () => {
-    setIsLoading(true);
-    // Simulate API delay
-    setTimeout(() => {
-      const mockUser: User = {
-        id: '12345',
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const user = await registerUser({
         name: 'Bat-Erdene',
         email: 'baterdene@gmail.com',
-        avatar: 'https://picsum.photos/50/50',
-        role: 'user'
-      };
-      setIsLoading(false);
-      onLogin(mockUser);
+      });
+      onLogin(user);
       onClose();
-    }, 1500);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Register failed', e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleAdminLogin = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-        const mockAdmin: User = {
-            id: 'admin1',
-            name: 'System Administrator',
-            email: 'javhaa.add@gmail.com',
-            avatar: 'https://ui-avatars.com/api/?name=Admin&background=f59e0b&color=fff',
-            role: 'admin'
-        };
-        setIsLoading(false);
-        onLogin(mockAdmin);
-        onClose();
-    }, 1000);
+  const handleAdminLogin = async () => {
+    try {
+      setIsLoading(true);
+      const user = await registerUser({
+        name: 'System Administrator',
+        email: 'admin@previsa.mn',
+      });
+      onLogin(user);
+      onClose();
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Admin login failed', e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

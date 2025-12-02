@@ -6,7 +6,13 @@ import { v4 as uuid } from 'uuid';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+// Configure CORS with specific origins and methods
+app.use(cors({
+  origin: 'https://previsa-mn-frontend.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(json());
 
 // --- In-memory demo storage ---
